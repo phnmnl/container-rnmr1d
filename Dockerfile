@@ -42,7 +42,7 @@ RUN apt-get -y clean && apt-get -y autoremove && rm -rf /var/lib/{cache,log}/ /u
 #RUN chmod +x /usr/local/bin/*.r
 
 # Add testing to container
-#ADD runTest1.sh /usr/local/bin/runTest1.sh
+ADD runTest1.sh /usr/local/bin/runTest1.sh
 
 # Define Entry point script
 #ENTRYPOINT [ "/opt/rnmr1d/exec/Rnmr1D" ]
