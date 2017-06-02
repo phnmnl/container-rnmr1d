@@ -1,0 +1,2 @@
+which /opt/rnmr1d/exec/Rnmr1D
+

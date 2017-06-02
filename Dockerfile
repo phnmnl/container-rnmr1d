@@ -9,7 +9,7 @@ LABEL Description="Rnmr1D replays the macro-command sequence generated within NM
 
 # Install packages for compilation
 RUN apt-get -y update
-RUN apt-get -y --no-install-recommends install ca-certificates wget zip unzip git libcurl4-gnutls-dev libcairo2-dev libxt-dev libxml2-dev libv8-dev libnlopt-dev gdebi-core pandoc pandoc-citeproc software-properties-common make gcc gfortran g++ r-recommended r-cran-rcurl r-cran-foreach r-cran-multicore r-cran-base64enc r-cran-qtl r-cran-xml libgsl2 libgsl0-dev gsl-bin
+RUN apt-get -y --no-install-recommends install ca-certificates wget zip unzip git libcurl4-gnutls-dev libcairo2-dev libxt-dev libxml2-dev libv8-dev libnlopt-dev libnlopt0 gdebi-core pandoc pandoc-citeproc software-properties-common make gcc gfortran g++ r-recommended r-cran-rcurl r-cran-foreach r-cran-multicore r-cran-base64enc r-cran-qtl r-cran-xml libgsl2 libgsl0-dev gsl-bin
 
 # Install R dependencies
 RUN R -e "install.packages(c('Rcpp','rjson', 'V8'), repos='http://cran.rstudio.com')"
@@ -32,7 +32,7 @@ RUN echo 'library(Rcpp); Rcpp.package.skeleton(name="Rnmr1D", code_files="libspe
     [ -d "./Rnmr1D" ] && rm -rf ./Rnmr1D
 
 # De-install not needed packages
-RUN apt-get -y --purge --auto-remove remove make gcc gfortran g++ libcurl4-gnutls-dev libcairo2-dev libxt-dev libxml2-dev libv8-dev libnlopt-dev
+RUN apt-get -y --purge --auto-remove remove make gcc gfortran g++ && apt-get -y --purge remove libcurl4-gnutls-dev libcairo2-dev libxt-dev libxml2-dev libv8-dev libnlopt-dev
 
 # Clean-up
 RUN apt-get -y clean && apt-get -y autoremove && rm -rf /var/lib/{cache,log}/ /usr/src/rnmr1d /tmp/* /var/tmp/*
@@ -45,6 +45,6 @@ RUN apt-get -y clean && apt-get -y autoremove && rm -rf /var/lib/{cache,log}/ /u
 #ADD runTest1.sh /usr/local/bin/runTest1.sh
 
 # Define Entry point script
-#ENTRYPOINT [ "Rscript" ]
-#CMD [ "/usr/local/bin/show_chromatogram.r" ]
+#ENTRYPOINT [ "/opt/rnmr1d/exec/Rnmr1D" ]
+#CMD [ "/opt/rnmr1d/exec/Rnmr1D" ]
 
