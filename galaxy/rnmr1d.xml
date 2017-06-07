@@ -1,11 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!--Proposed Tool Section: [File Handling]-->
 <tool id="rnmr1d" name="rnmr1d" version="0.1">
-<!--
   <requirements>
-        <container type="docker">phnmnl/rnmr1d</container>
+    <container type="docker">container-registry.phenomenal-h2020.eu/phnmnl/rnmr1d</container>
   </requirements>
--->
   <description>Preprocessing RAW NMR data with macro-commands.</description>
   <command><![CDATA[
     ls -al infile;
@@ -17,8 +15,8 @@
   ]]>
   </command>
   <inputs>
-    <param name="infile" type="text" format="nmrML" optional="False" label="Input nmrML file collection" />
-    <param name="macrofile" type="text" format="txt" optional="False" label="Macro-Command file" />
+    <param name="infile" type="data" format="nmrML" optional="False" label="Input nmrML file collection" />
+    <param name="macrofile" type="data" format="txt" optional="False" label="Macro-Command file" />
   </inputs>
   <outputs>
     <data name="outfile" type="text" format="txt" label="data matrix" />
