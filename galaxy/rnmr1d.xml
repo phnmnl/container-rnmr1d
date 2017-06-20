@@ -6,8 +6,10 @@
   </requirements>
   <description>Preprocessing RAW NMR data with macro-commands.</description>
   <command><![CDATA[
+    echo $infile;
+    echo $macrofile;
+    ls -al $infile;
     mkdir -p /data/input;
-    unzip -q -j -d /data/input $infile;
     mkdir -p /data/output;
     /opt/rnmr1d/exec/Rnmr1D --zip $infile --proccmd $macrofile --outnorm PQN --cpu 8 --outdir /data/output | tee /opt/output/stdout.log;
     cp -f /data/output/data_matrix.txt $outfile;
