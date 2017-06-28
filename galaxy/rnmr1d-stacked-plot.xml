@@ -7,7 +7,7 @@
   <description>Draw stacked plot of NMR FID.</description>
   <command><![CDATA[
     mkdir -p /data;
-    stacked.plot.r data_matrix_file=$infile pdf_output=$outfile stack_height=$stack_height max_ppm_shift=$max_ppm_shift plot_type=$plot_type;
+    stacked-plot.r data_matrix_file=$infile pdf_output=$outfile stack_height=$stack_height max_ppm_shift=$max_ppm_shift plot_type=$plot_type;
   ]]>
   </command>
   <inputs>

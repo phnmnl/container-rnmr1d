@@ -52,16 +52,14 @@ if (is.na(data_matrix_file) | is.na(pdf_output)) stop("Please specify at least t
 # MAIN
 # Following code is adapted from Daniel Jacob
 
-matfile <- "test_data_matrix_nmrml.txt"
+matfile <- data_matrix_file
 
 specmat <- read.table(matfile, header=T, sep="\t", stringsAsFactors=FALSE)
 
 ppm <- as.numeric(gsub('_', '.', gsub('B', '', colnames(specmat)[-1])))
 ppm_range <- c(min(ppm), max(ppm))
 
-cols <- c("red", "cornflowerblue", "darkgreen", "blueviolet", "orange", "magenta", "darkred", "coral", "mediumvioletred",
-         "yellow4", "seagreen2", "lightskyblue", "darkcyan", "yellowgreen", "limegreen","wheat2", "yellow4",  "violetred1",
-         "darkorange", "cyan4")
+cols <- rainbow(dim(specmat)[1])
 
 # Prepare stacked Plot
 Ymax <- max(specmat[,-1])        # intensity limit
