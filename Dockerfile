@@ -38,11 +38,12 @@ RUN apt-get -y --purge --auto-remove remove make gcc gfortran g++ && apt-get -y 
 RUN apt-get -y clean && apt-get -y autoremove && rm -rf /var/lib/{cache,log}/ /usr/src/rnmr1d /tmp/* /var/tmp/*
 
 # Add scripts to container
-#ADD scripts/*.r /usr/local/bin/
-#RUN chmod +x /usr/local/bin/*.r
+ADD scripts/* /usr/local/bin/
+RUN chmod +x /usr/local/bin/*
 
 # Add testing to container
 ADD runTest1.sh /usr/local/bin/runTest1.sh
+ADD runTest2.sh /usr/local/bin/runTest2.sh
 
 # Define Entry point script
 #ENTRYPOINT [ "/opt/rnmr1d/exec/Rnmr1D" ]
