@@ -1,10 +1,10 @@
-FROM container-registry.phenomenal-h2020.eu/phnmnl/rbase:latest
+FROM container-registry.phenomenal-h2020.eu/phnmnl/rbase:v3.4.1-1xenial0_cv0.2.12
 
 MAINTAINER PhenoMeNal-H2020 Project (phenomenal-h2020-users@googlegroups.com)
 
 LABEL software=rnmr1d
 LABEL software.version=1.2.8
-LABEL version=0.1
+LABEL version=0.2
 LABEL Description="Rnmr1D replays the macro-command sequence generated within NMRProcFlow."
 
 # Install packages for compilation
