@@ -2,10 +2,14 @@ FROM container-registry.phenomenal-h2020.eu/phnmnl/rbase:v3.4.1-1xenial0_cv0.2.1
 
 MAINTAINER PhenoMeNal-H2020 Project (phenomenal-h2020-users@googlegroups.com)
 
-LABEL software=rnmr1d
-LABEL software.version=1.2.8
-LABEL version=0.2
+LABEL software="rNMR1d"
+LABEL software.version="1.2.8"
+LABEL version="0.3"
 LABEL Description="Rnmr1D replays the macro-command sequence generated within NMRProcFlow."
+LABEL website="https://bitbucket.org/nmrprocflow/rnmr1d"
+LABEL documentation="https://bitbucket.org/nmrprocflow/rnmr1d"
+LABEL license="https://github.com/phnmnl/container-rnmr1d/blob/master/License.txt"
+LABEL tags="Metabolomics"
 
 RUN mkdir -p /opt/rnmr1d
 WORKDIR /opt/rnmr1d
