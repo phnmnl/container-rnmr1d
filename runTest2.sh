@@ -15,7 +15,7 @@ wget -O /data/input/NP_macro_cmd_MTBLS1.txt 'https://bitbucket.org/nmrprocflow/r
 wget -O /data/input/test_data_matrix.txt.gz 'https://github.com/phnmnl/container-rnmr1d/raw/develop/test_data_matrix_nmrml.txt.gz'
 
 # Run test
-/opt/rnmr1d/exec/Rnmr1D --zip /data/input/MTBLS1.zip \
+/opt/rnmr1d/exec/Rnmr1D --input /data/input/MTBLS1.zip \
    --proccmd /data/input/NP_macro_cmd_MTBLS1.txt \
    --outnorm PQN \
    --cpu 8 \
