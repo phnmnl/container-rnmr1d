@@ -10,6 +10,8 @@
     mkdir -p /data/output;
     /opt/rnmr1d/exec/Rnmr1D --zip $infile --proccmd $macrofile --outnorm PQN --cpu 8 --outdir /data/output 2>&1;
     cat /data/output/data_matrix.txt > $outfile;
+    cat /data/output/bucket_out.txt > $bucketfile;
+    cat /data/output/specs.pack > > $specsfile;
   ]]>
   </command>
   <inputs>
@@ -18,6 +20,8 @@
   </inputs>
   <outputs>
     <data name="outfile" type="data" format="txt" label="NMR data matrix" />
+    <data name="bucketfile" type="data" format="txt" label="NMR bucket matrix" />
+    <data name="specsfile" type="data" format="binary" label="NMR binary data" />
   </outputs>
   <help>
 Rnmr1D allows users to replay the macro-command sequence generated within NMRProcFlow. Moreover, without using NMRProcFlow, this module can also be used to replace any home-made script by a macro-command sequence.
