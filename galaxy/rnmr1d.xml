@@ -2,20 +2,28 @@
 <!--Proposed Tool Section: [File Handling]-->
 <tool id="rnmr1d" name="rnmr1d" version="0.4">
   <requirements>
-    <container type="docker">container-registry.phenomenal-h2020.eu/phnmnl/rnmr1d</container>
+<!--    <container type="docker">container-registry.phenomenal-h2020.eu/phnmnl/rnmr1d</container>
+-->
+    <container type="docker">phnmnl/rnmr1d</container>
   </requirements>
   <description>Preprocessing RAW NMR data with macro-commands.</description>
   <command><![CDATA[
+export infile_names='
+#for $infile in $infiles:
+${infile.name},
+#end for
+';
     mkdir -p /data/input;
     mkdir -p /data/output;
-    /opt/rnmr1d/exec/Rnmr1D --input $infile --proccmd $macrofile --outnorm PQN --cpu 8 --outdir /data/output 2>&1;
-    cat /data/output/data_matrix.txt > $outfile;
-    cat /data/output/bucket_out.txt > $bucketfile;
-    cat /data/output/specs.pack > > $specsfile;
+    for i in `echo \$infile_names | perl -pe 's/ /_/g' | perl -pe 's/\,_/\n/g'`; do echo \$i; done;
+    #/opt/rnmr1d/exec/Rnmr1D --input $infile --proccmd $macrofile --outnorm PQN --cpu 8 --outdir /data/output 2>&1;
+    #cat /data/output/data_matrix.txt > $outfile;
+    #cat /data/output/bucket_out.txt > $bucketfile;
+    #cat /data/output/specs.pack > > $specsfile;
   ]]>
   </command>
   <inputs>
-    <param name="infile" type="data" format="txt" multiple="True" optional="False" label="nmrML collection data" />
+    <param name="infiles" type="data" format="txt" multiple="True" optional="False" label="nmrML collection data" />
     <param name="macrofile" type="data" format="txt" optional="False" label="Macro-Command file" />
   </inputs>
   <outputs>
