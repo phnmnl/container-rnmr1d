@@ -1,10 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!--Proposed Tool Section: [File Handling]-->
-<tool id="rnmr1d" name="rnmr1d" version="0.4">
+<tool id="rnmr1d" name="rnmr1d" version="0.5">
   <requirements>
-<!--    <container type="docker">container-registry.phenomenal-h2020.eu/phnmnl/rnmr1d</container>
--->
-    <container type="docker">phnmnl/rnmr1d</container>
+    <container type="docker">container-registry.phenomenal-h2020.eu/phnmnl/rnmr1d</container>
   </requirements>
   <description>Preprocessing RAW NMR data with macro-commands.</description>
   <command><![CDATA[
@@ -15,11 +13,20 @@ ${infile.name},
 ';
     mkdir -p /data/input;
     mkdir -p /data/output;
-    for i in `echo \$infile_names | perl -pe 's/ /_/g' | perl -pe 's/\,_/\n/g'`; do echo \$i; done;
-    #/opt/rnmr1d/exec/Rnmr1D --input $infile --proccmd $macrofile --outnorm PQN --cpu 8 --outdir /data/output 2>&1;
-    #cat /data/output/data_matrix.txt > $outfile;
-    #cat /data/output/bucket_out.txt > $bucketfile;
-    #cat /data/output/specs.pack > > $specsfile;
+    for i in `echo \$infile_names | perl -pe 's/ /_/g' | perl -pe 's/\,_/\n/g'`; do echo \$i | perl -pe 's/\..*//' >> /tmp/infiles.name.txt; done;
+    for infile in `echo $infiles | perl -pe 's/\,/\n/g'`; do echo \$infile >> /tmp/infiles.txt; done;
+    export inlength=`cat /tmp/infiles.txt | wc -l`;
+    if [ \$inlength -ne `cat /tmp/infiles.name.txt | wc -l` ]; then echo "Oopsie. Number of files and files.name are not equal."; exit 1; fi;
+    for c in `seq 1 \$inlength`; do
+        export infile=`cat /tmp/infiles.txt | head -n \$c | tail -n 1`;
+        export cpfile=`cat \$infile | grep 'acquisition1D id=' | sed -e 's/.*id\=\"//' | sed -e 's/\".*/\.nmrML/'`;
+        cp -f \$infile /data/input/\$cpfile;
+    done;
+    /opt/rnmr1d/exec/Rnmr1D --input /data/input --proccmd $macrofile --outnorm PQN --cpu 8 --outdir /data/output 2>&1;
+    ls -al /data/output;
+    cat /data/output/data_matrix.txt > $outfile;
+    cat /data/output/bucket_out.txt > $bucketfile;
+    cat /data/output/specs.pack > $specsfile;
   ]]>
   </command>
   <inputs>
