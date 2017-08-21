@@ -18,7 +18,7 @@ for(arg in args)
   
   if(argCase=="inputmatrix")
   {
-    inputCamera=as.character(value)
+    inputMatrix=as.character(value)
   }
   if(argCase=="inputjson")
   {
