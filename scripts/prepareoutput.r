@@ -62,14 +62,14 @@ for(i in seq(1,numberOfFactors))
   factorNames<-c(factorNames,jsonFile$studies[[1]]$factors[[i]]$factorType$annotationValue)
 }
 MetdaData<-
-  data.frame(matrix(NA,nrow =length(pe$studies[[1]]$materials$samples),ncol =  numberOfFactors+1))
+  data.frame(matrix(NA,nrow =length(jsonFile$studies[[1]]$materials$samples),ncol =  numberOfFactors+1))
 names(MetdaData)<-c("sampleMetadata",factorNames)
-for(i in seq(1,length(pe$studies[[1]]$materials$samples)))
+for(i in seq(1,length(jsonFile$studies[[1]]$materials$samples)))
 {
-  MetdaData[i,1]<-pe$studies[[1]]$materials$samples[[i]]$name
+  MetdaData[i,1]<-jsonFile$studies[[1]]$materials$samples[[i]]$name
   for(j in seq(1,numberOfFactors))
   {
-    MetdaData[i,factorNames[j]]<-pe$studies[[1]]$materials$samples[[i]]$factorValues[[j]]$value$annotationValue
+    MetdaData[i,factorNames[j]]<-jsonFile$studies[[1]]$materials$samples[[i]]$factorValues[[j]]$value$annotationValue
   }
   
 }
