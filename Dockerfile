@@ -20,7 +20,7 @@ RUN apt-get -y update && apt-get -y --no-install-recommends install ca-certifica
  R -e "install.packages(c('docopt','doParallel', 'ptw', 'signal', 'openxlsx'), repos='https://mirrors.ebi.ac.uk/CRAN/')" && \
  R -e "source('http://bioconductor.org/biocLite.R'); biocLite('MassSpecWavelet'); biocLite('jsonlite'); biocLite('impute');" && \
  R -e "install.packages(c('gsl','RcppGSL','inline'), repos='https://mirrors.ebi.ac.uk/CRAN/')" && \
- R -e "install.packages('rvest', repos='https://mirrors.ebi.ac.uk/CRAN/')" && \
+ R -e "install.packages(c('jsonlite','mime','curl','openssl','R6','httr','rvest'), repos='https://mirrors.ebi.ac.uk/CRAN/')" && \
  R -e "install.packages('speaq', repos='https://mirrors.ebi.ac.uk/CRAN/')" && \
  git clone https://bitbucket.org/nmrprocflow/rnmr1d /usr/src/rnmr1d && \
  cp -rf /usr/src/rnmr1d/src/* /opt/rnmr1d && rm -rf /usr/src/rnmr1d && \
