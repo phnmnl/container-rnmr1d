@@ -22,7 +22,7 @@ Rnmr1D is the main module in the NMRProcFlow web application (http://nmrprocflow
 
 ## Instrument Data Type
 
-- NMR 1D
+- NMR / 1D NMR
 
 ## Tool Authors
 
