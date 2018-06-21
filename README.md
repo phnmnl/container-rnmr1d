@@ -1,7 +1,7 @@
 ![Logo](figs/logo.png)
 
 # Rnmr1d
-Version 1.2.14
+Version 1.2.18
 
 ## Short description
 Rnmr1D replays the macro-command sequence generated within NMRProcFlow 
