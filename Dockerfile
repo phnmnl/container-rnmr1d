@@ -1,4 +1,4 @@
-FROM container-registry.phenomenal-h2020.eu/phnmnl/speaq:dev_v2.3.1_cv1.0.10
+FROM container-registry.phenomenal-h2020.eu/phnmnl/speaq:v2.3.1_cv1.0.1.13
 
 MAINTAINER PhenoMeNal-H2020 Project (phenomenal-h2020-users@googlegroups.com)
 
