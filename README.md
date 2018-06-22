@@ -1,7 +1,7 @@
 ![Logo](figs/logo.png)
 
 # Rnmr1d
-Version 1.2.8
+Version 1.2.18
 
 ## Short description
 Rnmr1D replays the macro-command sequence generated within NMRProcFlow 
@@ -22,7 +22,7 @@ Rnmr1D is the main module in the NMRProcFlow web application (http://nmrprocflow
 
 ## Instrument Data Type
 
-- NMR 1D
+- NMR / 1D NMR
 
 ## Tool Authors
 

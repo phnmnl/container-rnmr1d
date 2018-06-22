@@ -1,25 +1,102 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!--Proposed Tool Section: [File Handling]-->
-<tool id="rnmr1d" name="rnmr1d" version="0.4">
+<tool id="rnmr1d" name="rnmr1d" version="0.6">
   <requirements>
     <container type="docker">container-registry.phenomenal-h2020.eu/phnmnl/rnmr1d</container>
   </requirements>
   <description>Preprocessing RAW NMR data with macro-commands.</description>
   <command><![CDATA[
+export infile_names='
+#for $infile in $infiles:
+${infile.name},
+#end for
+';
     mkdir -p /data/input;
     mkdir -p /data/output;
-    /opt/rnmr1d/exec/Rnmr1D --zip $infile --proccmd $macrofile --outnorm PQN --cpu 8 --outdir /data/output 2>&1;
+    for i in `echo \$infile_names | perl -pe 's/ /_/g' | perl -pe 's/\,_/\n/g'`; do echo \$i | perl -pe 's/\..*//' >> /tmp/infiles.name.txt; done;
+    for infile in `echo $infiles | perl -pe 's/\,/\n/g'`; do echo \$infile >> /tmp/infiles.txt; done;
+    export inlength=`cat /tmp/infiles.txt | wc -l`;
+    if [ \$inlength -ne `cat /tmp/infiles.name.txt | wc -l` ]; then echo "Oopsie. Number of files and files.name are not equal."; exit 1; fi;
+    for c in `seq 1 \$inlength`; do
+        export infile=`cat /tmp/infiles.txt | head -n \$c | tail -n 1`;
+        export cpfile=`cat \$infile | grep 'acquisition1D id=' | sed -e 's/.*id\=\"//' | sed -e 's/\".*/\.nmrML/'`;
+        cp -f \$infile /data/input/\$cpfile;
+    done;
+    /opt/rnmr1d/exec/Rnmr1D --input /data/input --proccmd $macrofile --outnorm PQN --cpu 8 --outdir /data/output 2>&1;
+    ls -al /data/output;
     cat /data/output/data_matrix.txt > $outfile;
+    cat /data/output/bucket_out.txt > $bucketfile;
+    cat /data/output/specs.pack > $specsfile;
   ]]>
   </command>
   <inputs>
-    <param name="infile" type="data" format="no_unzip.zip" optional="False" label="Zipped nmrML file collection" />
+    <param name="infiles" type="data" format="txt" multiple="True" optional="False" label="nmrML collection data" />
     <param name="macrofile" type="data" format="txt" optional="False" label="Macro-Command file" />
   </inputs>
   <outputs>
     <data name="outfile" type="data" format="txt" label="NMR data matrix" />
+    <data name="bucketfile" type="data" format="txt" label="NMR bucket matrix" />
+    <data name="specsfile" type="data" format="binary" label="NMR binary data" />
   </outputs>
-  <help>
-Rnmr1D allows users to replay the macro-command sequence generated within NMRProcFlow. Moreover, without using NMRProcFlow, this module can also be used to replace any home-made script by a macro-command sequence.
-  </help>
+  <help><![CDATA[
+Pre-process RAW NMR data with macro-commands using Rnmr1D.
+.. class::infomark
+**Author**  
+Kristian Peters (IPB-Halle) wrote this wrapper, Reza Salek (EMBL-EBI) feedback and testing it. The Rnmr1D NMR data processing tool in "R" was written by Daneil Jacob (INRA) (see below)
+----------------------------------------------------------------------------------
+.. class:: infomark
+**Tool**
+A Java program to convert vendor NMR RAW data to open souece nmrML XML format
+----------------------------------------------------------------------------------
+.. class:: infomark
+**Tool updates**
+See the **NEWS** section at the bottom of this page
+----------------------------------------------------------------------------------
+.. class:: infomark
+================================================================================
+**Rnmr1D**: Processing nmrML or verndor NMR data
+================================================================================
+-----------
+Description
+-----------
+Rnmr1D is the main module from the NMRProcFlow web application (http://nmrprocflow.org) develpped by Daniel Jacob (INRA), for 1D NMR spectra data processing.
+Rnmr1D allows users to process their NMR spectra using set of macro-command sequence. Outside NMRProcFlow Rnmr1D become a CLI application allowing users to replay the macro-command sequence generated within NMRProcFlow. Moreover, without using NMRProcFlow, this module can also be used to replace any 'home-made script' by a macro-command sequence. See Parameters for details. 
+.. class:: infomark
+**References**
+| Jacob D, Deborde C, Lefebvre M, Maucourt M, Moing A. NMRProcFlow: a graphical and interactive tool dedicated to 1D spectra processing for NMR-based metabolomics. Metabolomics. 2017;13(4):36. doi:10.1007/s11306-017-1178-y.
+---------------------------------------------------
+-----------------
+Workflow position
+-----------------
+Right after the nmrMLConv in a workflow or Galaxy nmrML/Vedor RAW NMR data
+.. image:: rnmr1d.png
+    :height: 425
+    :width: 392
+-----------
+Input files
+-----------
+Galaxy dataset nmrML or Vendor file format. Data input could be Zipped (preferred) or as individual files
+----------
+Parameters
+----------
+Use the macro editor for parameters, you need the have the correct Macro parameters as input for data processing (updated coming soon, currently as input .txt script file)
+------------
+Output files
+------------
+Output:
+ | NMR data matrix with aligned values (CSV format)
+ | Bucket file
+ | Spectra file
+---------------------------------------------------
+.. class:: infomark
+**License**
+Copyright (C) 2017 Daniel Jacob - INRA
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+----
+NEWS
+----
+More updates soonocessing dor
+ ]]></help>
 </tool>
