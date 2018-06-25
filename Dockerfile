@@ -3,8 +3,8 @@ FROM container-registry.phenomenal-h2020.eu/phnmnl/speaq:v2.3.1_cv1.0.1.13
 MAINTAINER PhenoMeNal-H2020 Project (phenomenal-h2020-users@googlegroups.com)
 
 LABEL software="rNMR1d"
-LABEL software.version="1.2.18"
-LABEL version="0.2.1"
+LABEL software.version="1.2.22"
+LABEL version="0.3"
 LABEL Description="Rnmr1D replays the macro-command sequence generated within NMRProcFlow."
 LABEL website="https://bitbucket.org/nmrprocflow/rnmr1d"
 LABEL documentation="https://bitbucket.org/nmrprocflow/rnmr1d"
